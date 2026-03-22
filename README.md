@@ -376,7 +376,7 @@ This project is licensed under the MIT License.
 
 ## 👤 Author
 
-Built with ❤️ for learning and portfolio purposes.
+Built with ❤️ by ASHISH KUMAR .
 
 ---
 
@@ -534,7 +534,7 @@ MIT
 
 ## 👨‍💻 Author
 
-Your Name
+ASHISH KUMAR 
 
 ## 🤝 Contributing
 
