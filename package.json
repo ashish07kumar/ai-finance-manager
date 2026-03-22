@@ -1,0 +1,27 @@
+{
+    "name": "finance-tracker-saas",
+    "version": "1.0.0",
+    "description": "Full-Stack Personal Finance Tracker SaaS Application",
+    "main": "index.js",
+    "scripts": {
+        "server": "cd server && npm start",
+        "client": "cd client && npm run dev",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "install-server": "cd server && npm install",
+        "install-client": "cd client && npm install",
+        "install-all": "npm run install-server && npm run install-client",
+        "build": "cd client && npm run build"
+    },
+    "keywords": [
+        "finance",
+        "tracker",
+        "saas",
+        "mern",
+        "fullstack"
+    ],
+    "author": "ashish kumar",
+    "license": "MIT",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

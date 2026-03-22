@@ -1,0 +1,77 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: finedge-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: finedge-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: finedge-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+    env_file:
+      - ./server/.env
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/finedge
+      - REDIS_URL=redis://redis:6379
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - '5000:5000'
+
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: finedge-worker
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+    env_file:
+      - ./server/.env
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongo:27017/finedge
+      - REDIS_URL=redis://redis:6379
+    command: npm run worker
+
+  client:
+    image: node:20-alpine
+    container_name: finedge-client
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0 --port 3000"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  redis_data:
