@@ -1,5 +1,7 @@
 # Finance Tracker SaaS - Full Stack Application
 
+**Author:** ashish kumar
+
 A complete, production-ready Personal Finance Tracker SaaS application with Node.js backend and React frontend. Built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## 🏗️ Project Structure
